@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -eu #e -> throw errors, u -> errors on undefined variables
+
+
+
+for path in "$@"; do
+	if test -f "$path"; then
+		echo "File $path existiert bereits!" >&2
+	else
+		echo -n '#!/bin/bash
+set -meu
+set -o pipefail
+' > "$path"
+
+		chmod +x "$path"
+	fi
+
+done
+
+if [ $# -ge 1 ]; then
+	vim "$@"
+else
+	echo "Usage: $0 path_to_script..."
+fi

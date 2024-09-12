@@ -1,0 +1,8 @@
+#!/bin/bash
+set -meu
+set -o pipefail
+
+n="${N-10}"
+
+git reflog | awk '{ print $1 }' | head -10 | xargs gitk
+
